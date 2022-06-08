@@ -1,0 +1,8 @@
+{
+  "name": "inquire-high-er",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "repository": "https://github.com/Kotov-Vlad/inquire-high-er.git",
+  "author": "Kotov-Vlad vladkotov240@yandex.ru",
+  "license": "MIT"
+}
