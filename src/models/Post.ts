@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { calculateER } from "../calculateER";
 import { Account } from "./Account";
+import { config } from ".."
 
 const postSchema = new Schema({
     maxChecks: Number,

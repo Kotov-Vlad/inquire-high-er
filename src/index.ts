@@ -1,11 +1,7 @@
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { Account } from "./models/Account";
 import { getTwitterClient } from "./twitterClient"
-import https from "https"
-import url from "url"
 import { connectDB } from "./db";
-import { Post } from "./models/Post";
-import mongoose, { Schema } from "mongoose";
 import { addCheckingPosts } from "./addCheckingPosts";
 import { checkPostsER } from "./checkPostsER";
 import { startServer } from "./server";

@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { TweetV2 } from "twitter-api-v2/dist/types/v2/tweet.definition.v2";
 import { client, config } from "..";
 import { calculateER } from "../calculateER";
 

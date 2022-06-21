@@ -1,4 +1,4 @@
-import { TwitterApi, TwitterApiReadOnly, TwitterApiReadWrite } from "twitter-api-v2";
+import { TwitterApi, TwitterApiReadWrite } from "twitter-api-v2";
 import { HttpsProxyAgent } from "https-proxy-agent";
 
 export function getTwitterClient(tokens:{appKey: string, appSecret: string,

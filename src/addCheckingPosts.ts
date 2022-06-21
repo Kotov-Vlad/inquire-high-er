@@ -1,4 +1,3 @@
-import { Account } from "./models/Account";
 import { Post } from "./models/Post";
 
 export async function addCheckingPosts(accounts: any[]) {
