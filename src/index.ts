@@ -8,6 +8,7 @@ import { startServer } from "./server";
 import { telgramServerStart } from "./telegram"
 
 export const config:any = {
+    mongoServer: "mongodb+srv://userdb:1234554321@cluster0.wqqwz.mongodb.net/",
     telegramChatId: "@bzbro",
     hostUrl: "",
     tokens: {

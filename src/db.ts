@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
-const MONGODB_SERVER = process.env.MONGODB_SERVER;
+import { config } from ".."
+const MONGODB_SERVER = config.mongoServer;
 
 export async function connectDB() {
     try {
