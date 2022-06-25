@@ -1,15 +1,5 @@
-import { HttpsProxyAgent } from "https-proxy-agent";
-import { Account } from "./models/Account";
-import { getTwitterClient } from "./twitterClient"
-import { connectDB } from "./db";
-import { addCheckingPosts } from "./addCheckingPosts";
-import { checkPostsER } from "./checkPostsER";
-import { startServer } from "./server";
-import { telgramServerStart } from "./telegram"
-
 export const config:any = {
-    mongoServer: "mongodb+srv://userdb:1234554321@cluster0.wqqwz.mongodb.net/",
-    telegramChatId: "@bzbro",
+    mongoServer: "mongodb://localhost:27017/db",
     hostUrl: "",
     tokens: {
         appKey: "rEWBLH61CpHmark9YMypiba2L",
@@ -22,27 +12,37 @@ export const config:any = {
     numTweetsInitER: 2,
     credentials: "",
     maximumExcessPer: "0.2",
-    maxChecksPosts: 48,
+    maxChecksPost: 48,
     port: "3000"
 }
+
+import { HttpsProxyAgent } from "https-proxy-agent";
+import { Account } from "./models/Account";
+import { getTwitterClient } from "./twitterClient"
+import { connectDB } from "./db";
+import { addCheckingPosts } from "./addCheckingPosts";
+import { checkPostsER } from "./checkPostsER";
+import { startServer } from "./server";
+import { runTelegramServer } from "./telegram";
+
 const credentials = Buffer.from(config.credentials).toString('base64')
 
 const httpAgent = new HttpsProxyAgent({host: "138.59.205.17", port: "9613", protocol: "http:", headers: {
     "Proxy-Authorization": `Basic ${credentials}`
 }});
-export const client = getTwitterClient(config.tokens, httpAgent);
+export const client = getTwitterClient(config.tokens);
 
 (
     async () => {
         try {
-            await telgramServerStart()
+            runTelegramServer()
             await startServer()
             await connectDB()
-            setInterval(async () => {
+            async function mainLoop() {
                 const accountsFromDB = await Account.find()
                 let accounts: any[] = [];
                 for(const accountFromDB of accountsFromDB) {
-                    accounts.push(new Account(accountFromDB))
+                    accounts.push(await Account.findOne({id:accountFromDB.id}))
                 }
                 if(accounts.length == 0) {
                     console.log("No accounts")
@@ -50,7 +50,10 @@ export const client = getTwitterClient(config.tokens, httpAgent);
                     await addCheckingPosts(accounts)
                     await checkPostsER(accounts)
                 }
-            }, 600000)
+                setTimeout(mainLoop, 20000)
+            }
+            mainLoop()
+            
         } catch (error) {
             console.error(error)
         }

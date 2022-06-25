@@ -15,7 +15,7 @@ export async function startServer() {
     app.use(bodyParser.json());
 
     app.get("/", async (req, res) => {
-        res.render("index", {title:"INQUIRE-HIGHT-ER", scriptUrl:"/static/index.js", styleUrl: "static/index.css"})
+        res.render("index", {title:"INQUIRE-HIGHT-ER", scriptUrl:"static/index.js", styleUrl: "static/index.css"})
     })
 
     app.get("/api/getAccounts", async(req, res) => {
@@ -29,6 +29,7 @@ export async function startServer() {
         const accountId = req.body.id
         const account = new Account({id: accountId, public_metrics: []})
         await account.initialization()
+        await account.save()
     })
 
     app.post("/api/removeAccount", async(req, res) => {

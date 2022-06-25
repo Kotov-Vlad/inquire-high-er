@@ -5,9 +5,10 @@ export async function updatePublicMetricsPosts(tweets:TweetV2[]) {
     try {
         for(let i = 0; i < tweets.length;i++) {
             const tweet = tweets[i];
-            await Post.updateOne({"id": tweet.id}, {"$set":{public_metrics:tweet.public_metrics}})
-            const ER = await (await Post.findOne({"id": tweet.id})).calculateER()
-            console.log(ER)
+            const post = await Post.findOne({"id": tweet.id})
+            post.public_metrics = tweet.public_metrics
+            await post.calculateER()
+            await post.save()
         }
     } catch (error) {
         console.error(error)

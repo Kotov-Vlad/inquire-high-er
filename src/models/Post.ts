@@ -27,7 +27,8 @@ const postSchema = new Schema({
     author_id: String,
     account_id: String,
     possibly_sensitive: Boolean,
-    maxChecksPosts: Number
+    maxChecksPosts: Number,
+    ER: Number
 })
 
 postSchema.methods.calculateER = async function() {

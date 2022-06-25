@@ -1,9 +1,6 @@
 (
     async () => {
-        const infoBlock = document.querySelector(".info-block")
-        const accounts = document.createElement("div")
-        accounts.setAttribute("class", "accounts")
-        infoBlock.appendChild(accounts)
+        const accounts = document.querySelector(".accounts")
         accounts.innerHTML = await ((await fetch("/api/getAccounts", {
             method: 'GET',
             mode: 'no-cors',
@@ -14,12 +11,7 @@
             }
         })).text())
 
-        const inputAdd = document.createElement("input")
-        inputAdd.setAttribute("type", "text")
-        inputAdd.setAttribute("placeholder", "type twitter id")
-        inputAdd.setAttribute("name", "input")
-        infoBlockAdd.appendChild(input)
-
+        const inputAdd = document.querySelector("#inputAdd")
 
         const addAccount = async () => {
             const id = inputAdd.value
@@ -32,18 +24,10 @@
                 })
             });
         }
-        const addAccountBtn = document.createElement("button")
-        addAccountBtn.setAttribute("id", "addAccountBtn")
-        infoBlock.appendChild(addAccountBtn)
-        addAccountBtn.innerHTML = "Send"
+        const addAccountBtn = document.querySelector("#addAccountBtn")
         addAccountBtn.addEventListener("click", addAccount)
 
-        const inputRemove = document.createElement("input")
-        inputAdd.setAttribute("type", "text")
-        inputAdd.setAttribute("placeholder", "type twitter id")
-        inputAdd.setAttribute("name", "input")
-        infoBlockAdd.appendChild(input)
-
+        const inputRemove = document.querySelector("#inputRemove")
 
         const removeAccount = async () => {
             const id = inputRemove.value
@@ -56,10 +40,7 @@
                 })
             });
         }
-        const removeAccountBtn = document.createElement("button")
-        removeAccountBtn.setAttribute("id", "removeAccountBtn")
-        infoBlock.appendChild(removeAccountBtn)
-        removeAccountBtn.innerHTML = "remove"
-        removeAccountBtn.addEventListener("click", addAccount)
+        const removeAccountBtn = document.querySelector("#removeAccountBtn")
+        removeAccountBtn.addEventListener("click", removeAccount)
     }
 )()

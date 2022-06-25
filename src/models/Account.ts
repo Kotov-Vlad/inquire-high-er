@@ -69,21 +69,20 @@ accountSchema.methods.initialization = async function() {
     try {
         const userTimeLine = await client.v2.userTimeline(this.id, {"user.fields": config.userFields, "tweet.fields": config.tweetFields});
         let currentTweets = 0
+        await this.updatePublicMetrics()
         for await (const fetchedTweet of userTimeLine) {
             console.log(fetchedTweet)
             if(currentTweets >= config.numTweetsInitER) {
                 break
             }
-            const metrics = fetchedTweet.public_metrics
-            const ER = calculateER(Number(metrics?.like_count), Number(metrics?.retweet_count), Number(metrics?.reply_count), Number(101107442))
+            const tweetMetrics = fetchedTweet.public_metrics
+            const ER = calculateER(Number(tweetMetrics?.like_count), Number(tweetMetrics?.retweet_count), Number(tweetMetrics?.reply_count), this.public_metrics.followers_count)
             if(ER) {
                 this.arrayER.push(ER)
             }
             currentTweets++
         }
-        await this.updatePublicMetrics()
         await this.calculateAverageER()
-        await this.save()
     } catch (error) {
         console.error(error)
     }

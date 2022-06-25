@@ -6,4 +6,9 @@ html
         div(class="wrapper")
             h1 This main page.
             div(class="info-block")
-            script(src=scriptUrl)
+                div(class="accounts")
+                input(id="inputAdd" name="input" placeholder="type twitter id for add")
+                button(id="addAccountBtn") add
+                input(id="inputRemove" name="input" placeholder="type twitter id for remove")
+                button(id="removeAccountBtn") remove
+    script(src=scriptUrl)
