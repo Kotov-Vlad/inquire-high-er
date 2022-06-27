@@ -1,15 +1,22 @@
 (
     async () => {
         const accounts = document.querySelector(".accounts")
-        accounts.innerHTML = await ((await fetch("/api/getAccounts", {
-            method: 'GET',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })).text())
+        const accountsDB = JSON.parse(
+            await ((await fetch("/api/getAccounts", {
+                method: 'GET',
+                mode: 'no-cors',
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })).text())
+        )
+        for(const accountDB of accountsDB) {
+            const div = document.createElement('div')
+            div.innerHTML = `@${accountDB.login} - id for delete: ${accountDB.id} - er: ${accountDB.currentAvergeER} - lastCheck: ${accountDB.lastCheckTimeLine}`
+            accounts.appendChild(div)
+        }
 
         const inputAdd = document.querySelector("#inputAdd")
 

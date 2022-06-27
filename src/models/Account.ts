@@ -4,6 +4,7 @@ import { calculateER } from "../calculateER";
 
 const accountSchema = new Schema({
     id: String,
+    login: String,
     checkingPostIds: {
         type: [],
         required: true
@@ -68,6 +69,7 @@ accountSchema.methods.updatePublicMetrics = async function() {
 accountSchema.methods.initialization = async function() {
     try {
         const userTimeLine = await client.v2.userTimeline(this.id, {"user.fields": config.userFields, "tweet.fields": config.tweetFields});
+        this.login = await (await client.v2.users([this.id])).data[0].username
         let currentTweets = 0
         await this.updatePublicMetrics()
         for await (const fetchedTweet of userTimeLine) {
@@ -83,6 +85,7 @@ accountSchema.methods.initialization = async function() {
             currentTweets++
         }
         await this.calculateAverageER()
+        this.updateLastCheckTimeLine()
     } catch (error) {
         console.error(error)
     }

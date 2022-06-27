@@ -27,9 +27,13 @@ export async function checkPostsER(accounts: any[]): Promise<void> {
                 }
             }
         }
-        const checkPostsList = await collectIdsOneArrRequest(accounts)
-        const tweets = (await client.v2.tweets(checkPostsList, {"tweet.fields": config.tweetFields})).data
-        await updatePublicMetricsPosts(tweets)
+        const checkPostsList =await collectIdsOneArrRequest(accounts)
+        if(checkPostsList.length > 0) {
+            const tweets = (await client.v2.tweets(checkPostsList, {"tweet.fields": config.tweetFields})).data
+            await updatePublicMetricsPosts(tweets)
+        } else {
+            console.log("no posts")
+        }
     } catch (error) {
         console.log("CHECKPOSTSER ERROR")
         console.error(error)
