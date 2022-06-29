@@ -34,7 +34,7 @@ export const client = getTwitterClient(config.tokens, config.proxyHost == "" ? u
                     await addCheckingPosts(accounts)
                     await checkPostsER(accounts)
                 }
-                setTimeout(mainLoop, 20000)
+                setTimeout(mainLoop, config.loop)
             }
             mainLoop()
             

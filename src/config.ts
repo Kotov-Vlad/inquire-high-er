@@ -20,5 +20,6 @@ interface Config {
     proxyProtocol: string;
     userFields: TTweetv2UserField[];
     tweetFields: TTweetv2TweetField[];
+    loop: number;
 }
 export const config: Config = JSON.parse(readFileSync("./config.json", {encoding: "utf-8"}))
