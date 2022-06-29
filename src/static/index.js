@@ -38,7 +38,7 @@
 
         const removeAccount = async () => {
             const id = inputRemove.value
-            inputAdd.value = ""
+            inputRemove.value = ""
             await fetch("/api/removeAccount", {
                 headers: {'Content-Type': 'application/json'},
                 method: "POST",
