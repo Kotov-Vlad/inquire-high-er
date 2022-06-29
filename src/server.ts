@@ -1,5 +1,5 @@
 import express from "express"
-import { config } from "."
+import { config } from "./config"
 import path from "path"
 import bodyParser from "body-parser"
 import { Account } from "./models/Account"

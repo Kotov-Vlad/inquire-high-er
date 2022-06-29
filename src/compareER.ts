@@ -1,4 +1,4 @@
-import { config } from "."
+import { config } from "./config"
 
 export function compareER(currentAvergeER:number, ER:number) {
     try {

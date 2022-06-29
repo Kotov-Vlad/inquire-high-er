@@ -1,6 +1,4 @@
-import { client, config } from ".";
-import { Account } from "./models/Account";
-import fetch from "node-fetch"
+import { client } from ".";
 
 (
     async () => {

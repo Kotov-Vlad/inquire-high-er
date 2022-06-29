@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import { config } from "."
+import { config } from "./config";
 const MONGODB_SERVER = config.mongoServer;
 
 export async function connectDB() {

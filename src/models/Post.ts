@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { calculateER } from "../calculateER";
 import { Account } from "./Account";
-import { config } from ".."
+import { config } from "./../config"
 
 const postSchema = new Schema({
     maxChecks: Number,
@@ -45,7 +45,7 @@ postSchema.methods.calculateER = async function() {
 
 postSchema.methods.setMaxChecksPosts = async function() {
     try {
-        this.maxChecksPosts = config.maxChecksPosts
+        this.maxChecksPosts = config.maxChecksPost
         return this.maxChecksPosts
     } catch (error) {
         console.error(error)

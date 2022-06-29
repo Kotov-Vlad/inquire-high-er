@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
-import { client, config } from "..";
+import { client } from "../.";
+import { config } from "../config"
 import { calculateER } from "../calculateER";
 
 const accountSchema = new Schema({
@@ -37,7 +38,7 @@ accountSchema.methods.getNewPosts = async function() {
     const date = this.lastCheckTimeLine == undefined ? "2010-11-06T00:00:00Z" : this.lastCheckTimeLine
     let arrayNewPosts = []
     try {
-        const userTimeLine = await client.v2.userTimeline(this.id, {"start_time": date, "user.fields": config.userFields, "tweet.fields": config.tweetFields});
+        const userTimeLine = await client.v2.userTimeline(this.id, {"start_time": date, "user.fields": config.userFields, "tweet.fields": config.tweetFields, exclude: ["retweets", "replies"]});
         let currentTweets = 0
         for await (const fetchedTweet of userTimeLine) {
             if(currentTweets >= config.numTweetsInitER) {
@@ -68,7 +69,7 @@ accountSchema.methods.updatePublicMetrics = async function() {
 
 accountSchema.methods.initialization = async function() {
     try {
-        const userTimeLine = await client.v2.userTimeline(this.id, {"user.fields": config.userFields, "tweet.fields": config.tweetFields});
+        const userTimeLine = await client.v2.userTimeline(this.id, {"user.fields": config.userFields, "tweet.fields": config.tweetFields, exclude: ["retweets", "replies"]});
         this.login = await (await client.v2.users([this.id])).data[0].username
         let currentTweets = 0
         await this.updatePublicMetrics()

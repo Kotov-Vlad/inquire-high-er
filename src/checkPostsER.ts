@@ -1,4 +1,5 @@
-import { client, config } from ".";
+import { client } from ".";
+import { config } from "./config"
 import { collectIdsOneArrRequest } from "./collectIdsOneArrRequest";
 import { compareER } from "./compareER";
 import { Post } from "./models/Post";
@@ -20,7 +21,7 @@ export async function checkPostsER(accounts: any[]): Promise<void> {
                     await Post.findByIdAndDelete(id)
                     account.checkingPostIds.splice(ids.findIndex((i: number) => i == id), 1)
                     await account.save()
-                } else if(post.maxChecksPosts > config.maxChecksPosts) {
+                } else if(post.maxChecksPosts > config.maxChecksPost) {
                     await Post.findByIdAndDelete(id)
                     account.checkingPostIds.splice(ids.findIndex((i: number) => i == id), 1)
                     await account.save()
