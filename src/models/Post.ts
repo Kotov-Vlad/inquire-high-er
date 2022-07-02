@@ -35,8 +35,8 @@ postSchema.methods.calculateER = async function() {
     try {
         const m = this.public_metrics
         const account:any = await Account.findById(this.account_id)
-        console.log(account)
         this.ER = calculateER(m.like_count, m.retweet_count, m.reply_count, account.public_metrics.followers_count)
+        account.arrayER.push(this.ER)
         return this.ER
     } catch (error) {
         console.error(error)
